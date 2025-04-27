@@ -3,22 +3,47 @@
   padding: 0;
   box-sizing: border-box;
 }
+/* body */
 body {
   background-image: url(./img/background.jpg);
   background-size: cover;
-
   background-repeat: no-repeat;
   background-attachment: fixed;
+  min-height: 100vh;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
 }
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    background-image: url(./img/background.jpg);
+  }
+}
+/* akhir body */
 
+/* header */
 .navbar {
+  position: fixed;
   display: flex;
+  top: 5%;
+  left: 50%;
+  width: auto;
+  transform: translateX(-50%);
+  max-width: 1200px;
+  z-index: 1000;
   gap: 2rem;
-  margin-top: 30px;
-  margin-left: 20px;
-  justify-content: center;
-  align-items: center;
   padding: 1rem;
+}
+.nav-container {
+  display: flex;
+  align-items: center; /* Ini yang menjaga keselarasan vertikal */
+  justify-content: space-between;
+  width: 100%;
 }
 .nav-list {
   list-style: none;
@@ -79,3 +104,72 @@ body {
   cursor: pointer;
   font-size: 1.5rem;
 }
+
+/* responsive style */
+
+/* @media (max-width: 768px) */
+@media (max-width: 768px) {
+  .navbar {
+    top: 2%;
+    width: 90%;
+    gap: 1rem;
+    padding: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .nav-container {
+    flex-wrap: wrap; /* Memungkinkan elemen pindah baris */
+  }
+  .nav-list {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .nav-list li a {
+    font-size: 1.3rem;
+    padding: 0.4rem 0.7rem;
+  }
+  .search-container {
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
+  }
+  .search-button {
+    font-size: 1.2rem;
+    padding: 0.2rem;
+  }
+}
+/* akhir @media (max-width: 768px)  */
+
+/* @media (max-width: 480px) */
+@media (max-width: 480px) {
+  .navbar {
+    top: 1%;
+    width: 95%;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+  .nav-container {
+    flex-direction: column;
+    width: auto;
+    gap: 0.75rem;
+  }
+  .nav-list,
+  .search-container {
+    width: auto;
+  }
+  .nav-list li a {
+    font-size: 1.1rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 5px;
+  }
+  .search-button {
+    font-size: 1rem;
+    padding: 0.3rem;
+  }
+}
+/* akhir @media (max-width: 480px) */
+
+/* akhir responsive style */
+
+/* akhir header */
