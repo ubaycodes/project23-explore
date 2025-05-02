@@ -2,6 +2,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+html {
+  scroll-behavior: smooth;
 }
 /* body */
 body {
@@ -13,6 +17,7 @@ body {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
+  padding-top: 80px;
 }
 @media (max-width: 768px) {
   body {
@@ -27,23 +32,41 @@ body {
 /* akhir body */
 
 /* header */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+.hamburger-line {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
 .navbar {
   position: fixed;
-  display: flex;
-  top: 5%;
+  top: 0;
   left: 50%;
-  width: auto;
   transform: translateX(-50%);
-  max-width: 1200px;
-  z-index: 1000;
-  gap: 2rem;
-  padding: 1rem;
-}
-.nav-container {
-  display: flex;
-  align-items: center; /* Ini yang menjaga keselarasan vertikal */
-  justify-content: space-between;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  transition: all 0.3 ease;
+}
+.navbar.scrolled {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px 50px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 .nav-list {
   list-style: none;
@@ -100,43 +123,81 @@ body {
   color: #ff6b6b;
   background: none;
   border: none;
-  padding: 0;
+  padding: 0 0 5px 0;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  display: inline-block;
+  position: relative;
+}
+.search-button i:hover {
+  color: #ff4757;
+  transform: translateY(-2px);
+  /* efek underline animasi */
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -8px;
+    left: 0;
+    background: #ff4757;
+    animation: underline 0.2s backwards;
+  }
 }
 
-/* responsive style */
+/* Media queries */
 
 /* @media (max-width: 768px) */
 @media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+  /* animasi hamburger saat active */
+  .hamburger.active .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
   .navbar {
-    top: 2%;
-    width: 90%;
-    gap: 1rem;
-    padding: 0.75rem;
     flex-wrap: wrap;
     justify-content: center;
-  }
-  .nav-container {
-    flex-wrap: wrap; /* Memungkinkan elemen pindah baris */
+    padding: 0.75rem;
   }
   .nav-list {
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: none;
+    position: fixed;
+    top: 80px;
+    left: -100px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 2rem;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0;
+    transition: left 0.3s ease;
+    box-shadow: 0 5px 10px #ff6b6b;
+  }
+  .nav-list.active {
+    display: flex;
+    left: 0;
   }
   .nav-list li a {
     font-size: 1.3rem;
     padding: 0.4rem 0.7rem;
   }
   .search-container {
+    order: 3;
     width: 100%;
     justify-content: center;
     margin-left: 0;
   }
   .search-button {
-    font-size: 1.2rem;
-    padding: 0.2rem;
+    font-size: 1.3rem;
+    padding: 0.4rem 0.7rem;
   }
 }
 /* akhir @media (max-width: 768px)  */
@@ -144,19 +205,18 @@ body {
 /* @media (max-width: 480px) */
 @media (max-width: 480px) {
   .navbar {
-    top: 1%;
-    width: 95%;
+    top: 0;
+    width: 100%;
     gap: 0.5rem;
     padding: 0.5rem;
-  }
-  .nav-container {
-    flex-direction: column;
-    width: auto;
-    gap: 0.75rem;
   }
   .nav-list,
   .search-container {
     width: auto;
+  }
+  .nav-list,
+  .search-container.active {
+    left: 0;
   }
   .nav-list li a {
     font-size: 1.1rem;
@@ -173,3 +233,245 @@ body {
 /* akhir responsive style */
 
 /* akhir header */
+
+/* main */
+
+/* section id = about */
+
+.destination-intro {
+  scroll-margin-top: 80px;
+  padding: 2rem 1rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+  padding: 0 15px;
+}
+.section-title {
+  padding-top: 80px;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #ff6b6b;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.section-title span {
+  color: #ff4757;
+}
+.lead-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ff4757;
+  max-width: 100%;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 0 5px rgba(47, 53, 66, 0.5);
+  padding: 0 10px;
+}
+.carousel-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-item {
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  opacity: 0.8;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 16px;
+  z-index: 10;
+}
+
+.prev {
+  left: 5px;
+}
+
+.next {
+  right: 5px;
+}
+
+.carousel-dots {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 4px;
+  background: #bbb;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: #ff4757;
+}
+/* Media queries */
+@media (max-width: 576px) {
+  .destination-intro {
+    padding-top: 80px;
+  }
+  .carousel-item img {
+    height: 300px;
+  }
+  .lead-text {
+    text-align: justify;
+    padding: 0;
+  }
+}
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .lead-text {
+    font-size: 1.1rem;
+    max-width: 800px;
+  }
+  .carousel-item img {
+    height: 350px;
+  }
+  .carousel-btn {
+    padding: 10px 15px;
+    font-size: 18px;
+  }
+  .prev {
+    left: 10px;
+  }
+  .next {
+    right: 10px;
+  }
+}
+
+@media (max-width: 992px) {
+  .destination-intro {
+    padding-top: 75px;
+  }
+
+  .lead-text {
+    margin-bottom: 2rem;
+  }
+}
+
+/* article-style */
+
+/* article container */
+.article-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* article title header */
+.article-title h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #ff4757;
+  margin-bottom: 50px;
+  position: relative;
+  padding-bottom: 15px;
+}
+.article-title h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+}
+
+/* articles card layout */
+.article-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+.article-card {
+  flex: 1 1 50%;
+  max-width: 550px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+.article-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgb(240, 63, 166);
+}
+.article-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.article-card:hover .article-image {
+  transform: scale(1.05);
+}
+
+/* article-content */
+.article-content {
+  padding: 25px;
+}
+.article-content h2 {
+  color: #2c3e50;
+  margin-top: 0;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+.article-content p {
+  color: #7f8c8d;
+  font-size: 1rem;
+  text-align: justify;
+  margin-bottom: 20px;
+}
+
+/* responsive design */
+
+@media (max-width: 768px) {
+  .article-card {
+    flex: 1 1 100%;
+  }
+  .article-title h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+}
